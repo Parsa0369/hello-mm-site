@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اتحادیه MM</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#090979,#000,#2d0b59,#00bfff);
+background-size:400% 400%;
+animation:bg 15s infinite ease;
+}
+
+@keyframes bg{
+0%{background-position:0 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0 50%;}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+.box{
+position:relative;
+z-index:5;
+width:90%;
+max-width:700px;
+padding:50px;
+text-align:center;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+border-radius:25px;
+border:1px solid rgba(255,255,255,.25);
+box-shadow:0 0 50px rgba(0,255,255,.2);
+animation:float 4s infinite ease-in-out;
+}
+
+@keyframes float{
+50%{
+transform:translateY(-10px);
+}
+}
+
+h1{
+font-size:55px;
+color:white;
+text-shadow:0 0 20px cyan;
+margin-bottom:20px;
+}
+
+h2{
+font-size:28px;
+color:#00ffff;
+margin-bottom:25px;
+}
+
+p{
+color:#ddd;
+font-size:18px;
+line-height:1.9;
+}
+
+.clock{
+margin-top:30px;
+font-size:26px;
+color:#fff;
+letter-spacing:3px;
+}
+
+button{
+margin-top:35px;
+padding:15px 45px;
+border:none;
+border-radius:50px;
+font-size:18px;
+cursor:pointer;
+color:white;
+background:linear-gradient(45deg,#00bfff,#0066ff);
+transition:.3s;
+box-shadow:0 0 25px cyan;
+}
+
+button:hover{
+transform:scale(1.08);
+box-shadow:0 0 40px cyan;
+}
+
+.cursor{
+position:fixed;
+width:18px;
+height:18px;
+background:#00ffff;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 25px cyan;
+transform:translate(-50%,-50%);
+z-index:999;
+}
+</style>
+
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="box">
+
+<h1>اتحادیه MM</h1>
+
+<h2>🚧 سایت در حال ساخت است 🚧</h2>
+
+<p>
+به‌زودی با امکانات جدید برمی‌گردیم...
+<br>
+از صبر و شکیبایی شما سپاسگزاریم.
+</p>
+
+<div class="clock" id="clock"></div>
+
+<button onclick="alert('به زودی افتتاح می‌شویم 🚀')">
+اطلاع از افتتاح
+</button>
+
+</div>
+
+<div class="cursor" id="cursor"></div>
+
+<script>
+
+const clock=document.getElementById("clock");
+
+setInterval(()=>{
+clock.innerHTML=new Date().toLocaleTimeString("fa-IR");
+},1000);
+
+
+// Cursor
+const cursor=document.getElementById("cursor");
+
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+
+// Background particles
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let particles=[];
+
+for(let i=0;i<120;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+dx:(Math.random()-.5),
+dy:(Math.random()-.5)
+});
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="rgba(0,255,255,.8)";
+ctx.fill();
+
+p.x+=p.dx;
+p.y+=p.dy;
+
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+
+});
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+onresize=()=>{
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+}
+
+</script>
+
+</body>
+</html>
